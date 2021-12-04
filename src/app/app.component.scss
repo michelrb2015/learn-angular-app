@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow: hidden;
+
+  .tf-form {
+    display: flex;
+    flex-direction: column;
+    width: 580px;
+
+    .tf-form-row {
+      display: flex;
+      justify-content: space-between;
+
+      .tf-form-field {
+        min-width: 280px;
+
+        &.column {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin-bottom: 25px;
+        }
+      }
+    }
+    .tf-action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+
+      button{
+          margin: 10px;
+      }
+    }
+  }
+}
