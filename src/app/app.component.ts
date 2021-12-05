@@ -1,15 +1,36 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { NgForm, FormGroup } from '@angular/forms';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { FormBuilder } from '@angular/forms'
+import { groupBy } from 'rxjs/internal/operators/groupBy';
+ 
  
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'Template driven forms';
+export class AppComponent {
  
-  @ViewChild('contactForm') contactForm!: NgForm;
+  title = 'Angular Reactive forms';
+ 
+  contactForm;
+ 
+  constructor(private formBuilder: FormBuilder) {
+ 
+    this.contactForm = this.formBuilder.group({
+      firstname: ['', [Validators.required, Validators.minLength(10)]],
+      lastname: ['', [Validators.required, Validators.maxLength(15), Validators.pattern("^[a-zA-Z]+$")]],
+      email: ['', [Validators.required, Validators.email]],
+      gender: ['', [Validators.required]],
+      isMarried: ['', [Validators.required]],
+      address: this.formBuilder.group({
+        country: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        street: ['', [Validators.required]],
+        pincode: ['', [Validators.required]],
+      })
+    });
+  }
  
   countryList: country[] = [
     new country("1", "India"),
@@ -17,90 +38,10 @@ export class AppComponent implements OnInit {
     new country('3', 'England')
   ];
  
-  contact!: contact;
- 
-  ngOnInit() {
- 
-    this.contact = {
-      firstname: "Sachem",
-      lastname: "Tendulkar",
-      email: "sachin@gmail.com",
-      gender: "male",
-      address: {
-        country: "2",
-        city: "Mumbai",
-        street: "Perry Cross Rd",
-        pincode: "400050"
-      }
-    };
- 
-    setTimeout(() => {
-      this.contactForm.setValue(this.contact);
-    });
- 
-  }
- 
   onSubmit() {
     console.log(this.contactForm.value);
   }
  
-  setDefaults() {
-    this.contactForm.setValue(this.contact);
-  }
- 
-  changeCountry() {
-    let obj = {
-      country: "1",
-      city: "",
-      street: "",
-      pincode: ""
-    };
-    this.contactForm.controls["address"].setValue(obj);
-  }
- 
-  patchValue() {
-    let obj = {
-      firstname: "Raul",
-      lastname: "David",
-      email: "rahul@gmail.com",
-    };
- 
-    this.contactForm.control.patchValue(obj);
- 
-  }
- 
-  changeAddress() {
-    let obj = {
-      country: "3",
-      city: "Bangalore",
-      street: "Brigade Road",
-      pincode: "600100"
-    };
-    let address= this.contactForm.controls["address"] as FormGroup
-    address.patchValue(obj);
- 
-  }
- 
-  reset() {
-    this.contactForm.reset();
-  }
- 
-  resetForm() {
-    this.contactForm.resetForm();
-  }
-}
- 
- export class contact {
-  firstname!: string;
-  lastname!: string;
-  email!: string;
-  gender!: string;
-  address!: {
-    country: string;
-    city: string;
-    street: string;
-    pincode: string;
-  };
 }
  
  

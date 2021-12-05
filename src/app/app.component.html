@@ -1,11 +1,11 @@
 <div class="wrapper">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Template Driven</mat-card-title>
+      <mat-card-title>Reactive Form</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
-      <form class="tf-form" #contactForm="ngForm" (ngSubmit)="onSubmit()">
+      <form class="tf-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="tf-form-row">
           <mat-form-field class="tf-form-field" appearance="outline">
             <mat-label for="firstname">First Name</mat-label>
@@ -13,19 +13,17 @@
               matInput
               placeholder="First Name"
               id="firstname"
-              name="firstname"
-              ngModel
+              formControlName="firstname"
             />
           </mat-form-field>
 
           <mat-form-field class="tf-form-field" appearance="outline">
-            <mat-label for="firstname">Last Name</mat-label>
+            <mat-label for="lasttname">Last Name</mat-label>
             <input
               matInput
               placeholder="Last Name"
               id="lastname"
-              name="lastname"
-              ngModel
+              formControlName="lastname"
             />
           </mat-form-field>
         </div>
@@ -37,8 +35,7 @@
               matInput
               placeholder="Email"
               id="email"
-              name="email"
-              ngModel
+              formControlName="email"
             />
           </mat-form-field>
 
@@ -46,8 +43,8 @@
             <mat-label for="email">Gender</mat-label>
             <mat-radio-group
               aria-label="Select an option"
-              name="gender"
-              ngModel
+              formControlName="gender"
+              
             >
               <mat-radio-button [style.marginRight.px]="15" value="male"
                 >Male</mat-radio-button
@@ -57,11 +54,11 @@
           </div>
         </div>
 
-        <div ngModelGroup="address">
+        <div formGroupName="address">
           <div class="tf-form-row">
             <mat-form-field class="tf-form-field" appearance="outline">
               <mat-label for="country">Country</mat-label>
-              <mat-select id="country" name="country" ngModel>
+              <mat-select id="country" formControlName="country">
                 <mat-option *ngFor="let c of countryList" [value]="c.id">
                   {{ c.name }}
                 </mat-option>
@@ -73,8 +70,7 @@
                 matInput
                 placeholder="City"
                 id="city"
-                name="city"
-                ngModel
+                formControlName="city"
               />
             </mat-form-field>
           </div>
@@ -85,8 +81,7 @@
                 matInput
                 placeholder="Street"
                 id="street"
-                name="street"
-                ngModel
+                formControlName="street"
               />
             </mat-form-field>
             <mat-form-field class="tf-form-field" appearance="outline">
@@ -95,37 +90,18 @@
                 matInput
                 placeholder="Pin Code"
                 id="pincode"
-                name="pincode"
-                ngModel
+                formControlName="pincode"
               />
             </mat-form-field>
           </div>
         </div>
         <div class="tf-action-buttons">
-          <button mat-raised-button type="submit" (click)="changeCountry()">
-            Change Country
+          <button mat-raised-button type="submit">
+            Submit
           </button>
-          <button mat-raised-button type="button" (click)="setDefaults()">
-            Set Defaults
-          </button>
-          <button mat-raised-button type="button" (click)="patchValue()">
-            Patch Value
-          </button>
-          <button mat-raised-button type="button" (click)="changeAddress()">
-            Change Address
-          </button>
-          <button mat-raised-button type="button" (click)="reset()">
-            Reset
-          </button>
-          <button mat-raised-button type="button" (click)="resetForm()">
-            Reset Form
-          </button>
+          
         </div>
         <div [style.marginTop.px]="20">
-          <b>valid</b> {{ contactForm.valid }} <b>touched</b>
-          {{ contactForm.touched }} <b>pristine</b> {{ contactForm.pristine }}
-          <b>dirty</b> {{ contactForm.dirty }}
-
         </div>
       </form>
     </mat-card-content>
